@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xbox Year in Review 2025 - walderpinheiro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --xbox-green: #107C10;
+            --xbox-green-light: #2ECC40;
+            --xbox-green-glow: rgba(16, 124, 16, 0.6);
+            --bg-dark: #0a0a0f;
+            --bg-card: #141420;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 60px 40px;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, var(--xbox-green-glow) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 80%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(16, 124, 16, 0.3) 0%, transparent 50%);
+            animation: pulse 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--xbox-green);
+            box-shadow: 0 0 30px var(--xbox-green-glow);
+        }
+        
+        .gamertag {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .ultimate-badge {
+            background: linear-gradient(135deg, #107C10, #2ECC40);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .year-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 8rem;
+            line-height: 0.9;
+            background: linear-gradient(180deg, #ffffff 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-icon {
+            color: var(--xbox-green);
+        }
+        
+        .badge-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .badge-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--xbox-green), var(--xbox-green-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 0 40px var(--xbox-green-glow);
+        }
+        
+        .badge-info h3 {
+            font-size: 1.3rem;
+            color: var(--xbox-green-light);
+            margin-bottom: 5px;
+        }
+        
+        .badge-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .comparison-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .comparison-title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .comparison-value {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .comparison-detail {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+        
+        .growth-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .growth-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 18px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .growth-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .growth-values {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .growth-diff {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-games-hero {
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            min-width: 400px;
+        }
+        
+        .top-games-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--xbox-green-light);
+        }
+        
+        .top5-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .top5-card:first-of-type {
+            background: linear-gradient(135deg, rgba(16, 124, 16, 0.3) 0%, rgba(16, 124, 16, 0.1) 100%);
+            border-color: var(--xbox-green);
+        }
+        
+        .top5-card:hover {
+            transform: translateX(5px);
+            border-color: var(--xbox-green);
+        }
+        
+        .top5-rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            width: 35px;
+            text-align: center;
+            color: var(--xbox-green-light);
+        }
+        
+        .top5-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .top5-info {
+            flex: 1;
+        }
+        
+        .top5-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+        
+        .top5-hours {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--xbox-green-light);
+        }
+        
+        /* Completed Games */
+        .completed-section {
+            padding: 80px 40px;
+            background: linear-gradient(180deg, rgba(16, 124, 16, 0.05) 0%, transparent 100%);
+        }
+        
+        .completed-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .completed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .completed-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--xbox-green);
+            transition: all 0.3s;
+        }
+        
+        .completed-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 124, 16, 0.3);
+        }
+        
+        .completed-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .completed-info {
+            flex: 1;
+        }
+        
+        .completed-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .completed-stats {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .completed-badge {
+            font-size: 1.5rem;
+            color: var(--xbox-green-light);
+            background: rgba(16, 124, 16, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .completed-count {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .completed-count-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            color: var(--xbox-green-light);
+            line-height: 1;
+        }
+        
+        .completed-count-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Highlights Section */
+        .highlights {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, var(--xbox-green-light), var(--xbox-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .highlight-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(16, 124, 16, 0.2);
+        }
+        
+        .highlight-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .highlight-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--xbox-green-light);
+        }
+        
+        .highlight-value.small {
+            font-size: 1.8rem;
+        }
+        
+        /* Top Games Section */
+        .top-games {
+            padding: 80px 40px;
+            background: linear-gradient(180deg, transparent 0%, rgba(16, 124, 16, 0.05) 100%);
+        }
+        
+        .games-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .games-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .game-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        
+        .game-card:hover {
+            background: rgba(16, 124, 16, 0.1);
+            border-color: var(--xbox-green);
+            transform: translateX(10px);
+        }
+        
+        .game-rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--xbox-green);
+            width: 50px;
+            text-align: center;
+        }
+        
+        .game-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .game-info {
+            flex: 1;
+        }
+        
+        .game-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-hours {
+            color: var(--xbox-green-light);
+            font-weight: 600;
+        }
+        
+        .stat-gs {
+            color: #FFD700;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--xbox-green), var(--xbox-green-light));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .footer a {
+            color: var(--xbox-green-light);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .year-title {
+                font-size: 5rem;
+            }
+            
+            .stats-row {
+                justify-content: center;
+            }
+            
+            .highlights-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .year-title {
+                font-size: 4rem;
+            }
+            
+            .highlights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .game-card {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="profile-header">
+                    <img src="https://images-eds-ssl.xboxlive.com/image?url=wHwbXKif8cus8csoZ03RW_ES.ojiJijNBGRVUbTnZKvlHqqbdJfZWiFtiClZ7rrQjjuuYohkY47xC6xY_khj_OvshCpDIIEe0VpJdnLWO2O8DJ3dXa_H0v8BvPdF3XB9QqA4k08RYoXrZ4peEotyiPEeOZNELfRUmTiA7wxwuN5j9OdOyYjGt9GKoyHvcm7K&format=png" alt="walderpinheiro" class="avatar" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=X'">
+                    <div>
+                        <span class="gamertag">walderpinheiro</span>
+                        <span class="ultimate-badge">ULTIMATE</span>
+                    </div>
+                </div>
+                
+                <h1 class="year-title">YEAR IN<br>REVIEW<br>2025</h1>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-label">Pontuação de jogo</span>
+                        <span class="stat-value"><span class="stat-icon">Ⓖ</span> 92895</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Conquistas em 2025</span>
+                        <span class="stat-value"><span class="stat-icon">🏆</span> 1,255</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Jogos em 2025</span>
+                        <span class="stat-value"><span class="stat-icon">🎮</span> 44</span>
+                    </div>
+                </div>
+                
+                <div class="growth-row">
+                    <div class="growth-item">
+                        <span class="growth-label">⏱️ Horas jogadas</span>
+                        <span class="growth-values">1,198h → 1,546h</span>
+                        <span class="growth-diff" style="color: #2ECC40">↑ 348h</span>
+                    </div>
+                    <div class="growth-item">
+                        <span class="growth-label">🏆 Gamerscore</span>
+                        <span class="growth-values">68,285G → 92,895G</span>
+                        <span class="growth-diff" style="color: #2ECC40">↑ 24,610G</span>
+                    </div>
+                    <div class="growth-item">
+                        <span class="growth-label">🎖️ Conquistas</span>
+                        <span class="growth-values">1,563 → 1,255</span>
+                        <span class="growth-diff" style="color: #FF4136">↓ 308</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-right">
+                <div class="top-games-hero">
+                    <h3 class="top-games-title">🏆 Top 5 Jogos de 2025</h3>
+                    
+        <div class="top5-card">
+            <span class="top5-rank">1</span>
+            <img src="http://store-images.s-microsoft.com/image/apps.40391.13915115277924383.ab2daab8-cb71-4e1a-ad73-9e4a3e87c3f3.960a3fa2-5987-49b8-9d15-602af0a1ff93" alt="Hollow Knight: Silksong" class="top5-image" onerror="this.src='https://via.placeholder.com/60/1a1a2e/FFFFFF?text=X'">
+            <div class="top5-info">
+                <div class="top5-name">Hollow Knight: Silksong</div>
+                <div class="top5-hours">123.0h</div>
+            </div>
+        </div>
+        
+        <div class="top5-card">
+            <span class="top5-rank">2</span>
+            <img src="http://store-images.s-microsoft.com/image/apps.40346.13624715126573049.35e3abd5-bd41-4efb-bc2a-0bfbdd50b02a.84157e34-31f1-40b6-849a-e8729c39d4b6" alt="Avowed" class="top5-image" onerror="this.src='https://via.placeholder.com/60/1a1a2e/FFFFFF?text=X'">
+            <div class="top5-info">
+                <div class="top5-name">Avowed</div>
+                <div class="top5-hours">78.8h</div>
+            </div>
+        </div>
+        
+        <div class="top5-card">
+            <span class="top5-rank">3</span>
+            <img src="http://store-images.s-microsoft.com/image/apps.13628.14322280443288156.27788484-2760-47f7-be0d-dd693682e016.04a10e3c-848f-424d-a431-2846f34b1a6b" alt="Clair Obscur: Expedition 33" class="top5-image" onerror="this.src='https://via.placeholder.com/60/1a1a2e/FFFFFF?text=X'">
+            <div class="top5-info">
+                <div class="top5-name">Clair Obscur: Expedition 33</div>
+                <div class="top5-hours">75.1h</div>
+            </div>
+        </div>
+        
+        <div class="top5-card">
+            <span class="top5-rank">4</span>
+            <img src="http://store-images.s-microsoft.com/image/apps.35204.14440549613106092.b31249c1-76f7-4d2f-bc17-75d6d2d5bba4.ff61b1cd-7360-424d-a3bf-de63248623f8" alt="Black Myth: Wukong" class="top5-image" onerror="this.src='https://via.placeholder.com/60/1a1a2e/FFFFFF?text=X'">
+            <div class="top5-info">
+                <div class="top5-name">Black Myth: Wukong</div>
+                <div class="top5-hours">67.3h</div>
+            </div>
+        </div>
+        
+        <div class="top5-card">
+            <span class="top5-rank">5</span>
+            <img src="http://store-images.s-microsoft.com/image/apps.7811.14601317961808017.7b103743-3dbd-479d-b77a-f82e7f0548c6.c9ceadb9-745b-4d97-893d-84a83391a121" alt="Assassin's Creed Shadows" class="top5-image" onerror="this.src='https://via.placeholder.com/60/1a1a2e/FFFFFF?text=X'">
+            <div class="top5-info">
+                <div class="top5-name">Assassin's Creed Shadows</div>
+                <div class="top5-hours">54.5h</div>
+            </div>
+        </div>
+        
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Highlights Section -->
+    <section class="highlights">
+        <h2 class="section-title">Destaques de 2025</h2>
+        
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <div class="highlight-icon">⏱️</div>
+                <div class="highlight-label">Tempo total</div>
+                <div class="highlight-value">1,546 h</div>
+            </div>
+            
+            <div class="highlight-card">
+                <div class="highlight-icon">🎮</div>
+                <div class="highlight-label">Jogos jogados</div>
+                <div class="highlight-value">44</div>
+            </div>
+            
+            
+            <div class="highlight-card">
+                <div class="highlight-icon">🏆</div>
+                <div class="highlight-label">Conquistas desbloqueadas</div>
+                <div class="highlight-value">+1,255</div>
+            </div>
+            
+            <div class="highlight-card">
+                <div class="highlight-icon">Ⓖ</div>
+                <div class="highlight-label">Gamerscore conquistado</div>
+                <div class="highlight-value">+25,780</div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- Top Games Section -->
+    <section class="top-games">
+        <div class="games-container">
+            <h2 class="section-title">Top 10 Jogos por Horas</h2>
+            
+            <div class="games-grid">
+                
+    <div class="game-card">
+        <div class="game-rank">#1</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.40391.13915115277924383.ab2daab8-cb71-4e1a-ad73-9e4a3e87c3f3.960a3fa2-5987-49b8-9d15-602af0a1ff93" alt="Hollow Knight: Silksong" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Hollow Knight: Silksong </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 123.0h</span>
+                <span class="stat-gs">🏆 765G</span>
+                <span class="stat-progress">76%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 76.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#2</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.40346.13624715126573049.35e3abd5-bd41-4efb-bc2a-0bfbdd50b02a.84157e34-31f1-40b6-849a-e8729c39d4b6" alt="Avowed" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Avowed </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 78.8h</span>
+                <span class="stat-gs">🏆 700G</span>
+                <span class="stat-progress">70%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 70.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#3</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.13628.14322280443288156.27788484-2760-47f7-be0d-dd693682e016.04a10e3c-848f-424d-a431-2846f34b1a6b" alt="Clair Obscur: Expedition 33" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Clair Obscur: Expedition 33 </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 75.1h</span>
+                <span class="stat-gs">🏆 600G</span>
+                <span class="stat-progress">60%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 60.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#4</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.35204.14440549613106092.b31249c1-76f7-4d2f-bc17-75d6d2d5bba4.ff61b1cd-7360-424d-a3bf-de63248623f8" alt="Black Myth: Wukong" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Black Myth: Wukong </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 67.3h</span>
+                <span class="stat-gs">🏆 675G</span>
+                <span class="stat-progress">68%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 68.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#5</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.7811.14601317961808017.7b103743-3dbd-479d-b77a-f82e7f0548c6.c9ceadb9-745b-4d97-893d-84a83391a121" alt="Assassin's Creed Shadows" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Assassin's Creed Shadows </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 54.5h</span>
+                <span class="stat-gs">🏆 690G</span>
+                <span class="stat-progress">53%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 53.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#6</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.41744.14086924108488409.5098cc78-dcb3-4bc1-858f-48fa36bb7026.e990bffb-c0f2-4506-b06d-f537efb4b3ee" alt="The Outer Worlds 2" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">The Outer Worlds 2 </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 53.3h</span>
+                <span class="stat-gs">🏆 475G</span>
+                <span class="stat-progress">48%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 48.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#7</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.4409.13931597911286849.582dd0c2-0bc6-48bc-a4fd-586a0a0f1161.fdc1d1e0-3535-4e5f-b9ee-6adbe3d183e1" alt="Enotria: The Last Song" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Enotria: The Last Song </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 43.8h</span>
+                <span class="stat-gs">🏆 565G</span>
+                <span class="stat-progress">56%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 56.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#8</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.41963.68444863531073822.6a10e9ea-cb58-4133-b842-d7fe20a16da4.83bef37d-9dd0-4dc0-8d90-8a786e205752" alt="Dying Light 2: Stay Human - Reloaded Edition" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">Dying Light 2: Stay Human - Reloaded Edition </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 40.7h</span>
+                <span class="stat-gs">🏆 325G</span>
+                <span class="stat-progress">29%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 29.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#9</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.1369.14239344665439398.f72b7e9e-0a95-4e76-b1e3-8989c4d70e2e.b3c057a4-8d69-420d-8d02-9c28587dac55" alt="DOOM: The Dark Ages" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">DOOM: The Dark Ages ✓</div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 38.0h</span>
+                <span class="stat-gs">🏆 1000G</span>
+                <span class="stat-progress">100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-card">
+        <div class="game-rank">#10</div>
+        <img src="http://store-images.s-microsoft.com/image/apps.23737.14265695181764657.4b73f401-4411-4e71-82f9-faeba27e8039.089d163d-d7ac-410d-a2c8-942511524105" alt="The First Berserker: Khazan" class="game-image" onerror="this.src='https://via.placeholder.com/120x120/1a1a2e/FFFFFF?text=Xbox'">
+        <div class="game-info">
+            <div class="game-name">The First Berserker: Khazan </div>
+            <div class="game-stats">
+                <span class="stat-hours">⏱️ 37.8h</span>
+                <span class="stat-gs">🏆 465G</span>
+                <span class="stat-progress">46%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 46.0%"></div>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+    </section>
+    
+    <!-- Completed Games -->
+    <section class="completed-section">
+        <div class="completed-container">
+            <h2 class="section-title">🏆 Jogos 100% em 2025</h2>
+            
+            <div class="completed-count">
+                <div class="completed-count-number">6</div>
+                <div class="completed-count-label">jogos completados com todas as conquistas</div>
+            </div>
+            
+            <div class="completed-grid">
+                
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.17658.14341421973666013.292233f8-d8a7-4ef0-bb49-824c7b2154f4.a874ab6c-c593-46da-beec-a0a275edd53a" alt="SILENT HILL 2" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">SILENT HILL 2</div>
+                <div class="completed-stats">1000G • 16.8h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.31716.64860558234786024.c6d17f3a-2d73-46e6-8a1e-c828e528d51f.15e3df91-43f0-4055-8d0c-fcd4ef265c93" alt="Little Nightmares II Enhanced Edition" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">Little Nightmares II Enhanced Edition</div>
+                <div class="completed-stats">1000G • 6.0h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.1369.14239344665439398.f72b7e9e-0a95-4e76-b1e3-8989c4d70e2e.b3c057a4-8d69-420d-8d02-9c28587dac55" alt="DOOM: The Dark Ages" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">DOOM: The Dark Ages</div>
+                <div class="completed-stats">1000G • 38.0h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.31946.13678609147241298.c742bfe1-6624-4d6a-800e-503c12872c58.bf5a297c-46e9-4f84-ace0-768fc3345071" alt="South of Midnight" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">South of Midnight</div>
+                <div class="completed-stats">1000G • 23.5h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.46519.13754353355107546.f95d4bed-6029-48c9-95a2-24f3a636c4e7.e42e70b7-7fe9-4cff-bb5d-6da58963c3d8" alt="The Sinking City Xbox Series X|S" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">The Sinking City Xbox Series X|S</div>
+                <div class="completed-stats">1000G • 15.1h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+        <div class="completed-card">
+            <img src="http://store-images.s-microsoft.com/image/apps.36981.14437625873556138.1d6e288f-b89e-475a-994c-e74942708ac7.65ab57f9-0005-4919-8efe-281e446f19ad" alt="Creaks" class="completed-image" onerror="this.src='https://via.placeholder.com/70/1a1a2e/FFFFFF?text=X'">
+            <div class="completed-info">
+                <div class="completed-name">Creaks</div>
+                <div class="completed-stats">1000G • 6.5h</div>
+            </div>
+            <span class="completed-badge">✓</span>
+        </div>
+        
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Gerado automaticamente via <a href="#">Xbox WebAPI</a> • 19/12/2025 às 13:43</p>
+        <p style="margin-top: 10px;">© 2025 Xbox Year in Review • walderpinheiro</p>
+    </footer>
+</body>
+</html>
