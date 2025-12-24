@@ -1,0 +1,11 @@
+# Tokens e credenciais - NUNCA commitar!
+tokens/
+.env
+
+# Snapshots JSON (contém dados pessoais)
+output/*.json
+
+# Cache Python
+__pycache__/
+*.pyc
+

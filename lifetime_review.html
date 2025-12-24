@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xbox Lifetime Review - walderpinheiro</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Xbox Lifetime Review - walderpinheiro">
+    <meta property="og:description" content="walderpinheiro - 3.486,9h jogadas, 157 jogos, 3.354 conquistas">
+    <meta property="og:image" content="share_walderpinheiro.svg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xbox Lifetime Review - walderpinheiro">
+    <meta name="twitter:description" content="walderpinheiro - 3.486,9h jogadas, 157 jogos, 3.354 conquistas">
+    <meta name="twitter:image" content="share_walderpinheiro.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --xbox-green: #107C10;
+            --xbox-green-light: #2ECC40;
+            --xbox-glow: rgba(16, 124, 16, 0.5);
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --legendary: #ff8000;
+            --epic: #a335ee;
+            --rare: #0070dd;
+            --bg-dark: #0a0a0f;
+            --bg-card: #141420;
+            --bg-card-alt: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #8a8a9a;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* SHARE BUTTON */
+        .share-btn {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--xbox-green), var(--xbox-green-light));
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 20px var(--xbox-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--xbox-glow);
+        }
+        .share-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* HERO SECTION - Background blur do jogo mais jogado */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('http://store-images.s-microsoft.com/image/apps.40541.14241982748923031.b7ab82d8-956b-4d85-b739-c1cd07cb25df.8996f92a-d276-4066-82cc-bee08083b900');
+            background-size: cover;
+            background-position: center;
+            filter: blur(15px) brightness(0.5) saturate(1.2);
+            transform: scale(1.15);
+            z-index: 1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, 
+                rgba(16, 124, 16, 0.25) 0%,
+                rgba(10, 30, 15, 0.6) 40%,
+                rgba(10, 15, 12, 0.85) 70%,
+                rgba(10, 10, 15, 1) 100%);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+            max-width: 1000px;
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--xbox-green);
+            box-shadow: 0 0 30px var(--xbox-glow);
+        }
+        
+        .gamertag {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 2px;
+        }
+        
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 7rem;
+            line-height: 0.9;
+            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 50px;
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .stat-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--xbox-green-light);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .top-game-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--xbox-green), var(--xbox-green-light));
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px var(--xbox-glow);
+        }
+        
+        .top-game-badge img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+        }
+        
+        .top-game-info {
+            text-align: left;
+        }
+        
+        .top-game-label {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .top-game-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        /* SECTIONS */
+        .section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, var(--xbox-green-light), var(--xbox-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        
+        /* TOP 10 GAMES */
+        .games-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .game-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateX(10px);
+            border-color: var(--xbox-green);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .game-card.gold { border-left: 4px solid var(--gold); }
+        .game-card.silver { border-left: 4px solid var(--silver); }
+        .game-card.bronze { border-left: 4px solid var(--bronze); }
+        
+        .game-rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            width: 50px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .game-card.gold .game-rank { color: var(--gold); }
+        .game-card.silver .game-rank { color: var(--silver); }
+        .game-card.bronze .game-rank { color: var(--bronze); }
+        
+        .game-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .game-info {
+            flex: 1;
+        }
+        
+        .game-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .game-hours {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--xbox-green-light);
+        }
+        
+        .game-stats-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .game-achievements-tag {
+            background: rgba(16, 124, 16, 0.3);
+            color: var(--xbox-green-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .game-progress {
+            margin-top: 8px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar.full-width {
+            width: 100%;
+            max-width: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--xbox-green), var(--xbox-green-light));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* RAREST ACHIEVEMENTS */
+        .achievements-section {
+            background: linear-gradient(180deg, rgba(163, 53, 238, 0.05) 0%, transparent 100%);
+        }
+        
+        .achievements-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .achievement-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .achievement-card:hover {
+            transform: translateX(10px);
+        }
+        
+        .achievement-card.legendary { border-left: 4px solid var(--legendary); }
+        .achievement-card.epic { border-left: 4px solid var(--epic); }
+        .achievement-card.rare { border-left: 4px solid var(--rare); }
+        
+        .achievement-rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .achievement-card.legendary .achievement-rank { color: var(--legendary); }
+        .achievement-card.epic .achievement-rank { color: var(--epic); }
+        .achievement-card.rare .achievement-rank { color: var(--rare); }
+        
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .achievement-game {
+            font-size: 0.85rem;
+            color: var(--xbox-green-light);
+            margin-bottom: 3px;
+        }
+        
+        .achievement-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .achievement-date {
+            font-size: 0.75rem;
+            color: var(--xbox-green-light);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        
+        .achievement-rarity {
+            text-align: right;
+            min-width: 80px;
+        }
+        
+        .rarity-percent {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .achievement-card.legendary .rarity-percent { color: var(--legendary); }
+        .achievement-card.epic .rarity-percent { color: var(--epic); }
+        .achievement-card.rare .rarity-percent { color: var(--rare); }
+        
+        .rarity-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        .achievement-gs {
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-top: 5px;
+        }
+        
+        /* CHART SECTION */
+        .chart-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 80px auto;
+            max-width: 1100px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 350px;
+        }
+        
+        /* TIMELINE */
+        .timeline-section {
+            background: linear-gradient(180deg, rgba(16, 124, 16, 0.05) 0%, transparent 100%);
+        }
+        
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .timeline-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .timeline-year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--xbox-green-light);
+            min-width: 100px;
+            text-align: right;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .timeline-bar-wrap {
+            position: relative;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--xbox-green), var(--xbox-green-light));
+            border-radius: 5px;
+        }
+        
+        .timeline-hours {
+            position: absolute;
+            right: 10px;
+            top: -25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--xbox-green-light);
+        }
+        
+        .timeline-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+        
+        .year-top-game {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+        
+        .year-top-game img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        
+        .year-top-game .top-label {
+            color: var(--text-secondary);
+        }
+        
+        .year-top-game .top-name {
+            font-weight: 600;
+        }
+        
+        .year-top-game .top-hours {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        /* COMPLETED GAMES */
+        .completed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .completed-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid var(--xbox-green);
+        }
+        
+        .completed-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        
+        .completed-info {
+            flex: 1;
+        }
+        
+        .completed-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .completed-stats {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .completed-badge {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--xbox-green-light);
+            background: rgba(16, 124, 16, 0.2);
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+            .gamertag {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .game-card, .achievement-card {
+                flex-wrap: wrap;
+            }
+            .timeline-row {
+                flex-direction: column;
+            }
+            .timeline-year {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SHARE BUTTON -->
+    <button class="share-btn" onclick="shareReview()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+        Compartilhar
+    </button>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="profile-section">
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=wHwbXKif8cus8csoZ03RW3apWESZjav65Yncai8aRmWL5wD_dXiCeIhr2I61i4BQKudqPuTpZOC067B_6VFevvAlIf1.JXpGyNooAGQxmaAJ.VzBsFGfd2S63_nphPABzN.YjycTt61vH1IvsUzFi9FZ0hlPED6Y8iiLK0T8BtogY80Z_pyjE60Ie9jNx9Aj&format=png" alt="walderpinheiro" class="avatar" onerror="this.src='https://via.placeholder.com/100/107C10/FFFFFF?text=X'">
+                <h1 class="gamertag">walderpinheiro</h1>
+            </div>
+            
+            <h2 class="hero-title">LIFETIME<br>REVIEW</h2>
+            
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value">3.486,9h</div>
+                    <div class="stat-label">Total de Horas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-value">157</div>
+                    <div class="stat-label">Jogos Jogados</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value">92.970G</div>
+                    <div class="stat-label">Gamerscore</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🏅</div>
+                    <div class="stat-value">3.354</div>
+                    <div class="stat-label">Conquistas</div>
+                </div>
+            </div>
+            
+            <div class="top-game-badge">
+                <img src="http://store-images.s-microsoft.com/image/apps.40541.14241982748923031.b7ab82d8-956b-4d85-b739-c1cd07cb25df.8996f92a-d276-4066-82cc-bee08083b900" alt="Cities: Skylines II - PC Edition" onerror="this.style.display='none'">
+                <div class="top-game-info">
+                    <div class="top-game-label">🔥 Jogo mais jogado</div>
+                    <div class="top-game-name">Cities: Skylines II - PC Edition · 591,9h</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TOP 10 JOGOS -->
+    <section class="section">
+        <h2 class="section-title">TOP 10 JOGOS MAIS JOGADOS</h2>
+        <div class="games-grid">
+            
+            <div class="game-card gold">
+                <div class="game-rank">1</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.40541.14241982748923031.b7ab82d8-956b-4d85-b739-c1cd07cb25df.8996f92a-d276-4066-82cc-bee08083b900" alt="Cities: Skylines II - PC Edition" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Cities: Skylines II - PC Edition</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">591,9h</span>
+                        <span class="game-achievements-tag">🏅 24</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 68.0%"></div>
+                            <span class="progress-text">68%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card silver">
+                <div class="game-rank">2</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.1647.13567343664224659.1eb6fdf9-8a0b-4344-a135-ab17dfa3c609.39331391-9de2-48f8-8643-8eb1bd964383" alt="Starfield" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Starfield</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">189,2h</span>
+                        <span class="game-achievements-tag">🏅 56</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 92.0%"></div>
+                            <span class="progress-text">92%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card bronze">
+                <div class="game-rank">3</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.44529.13966330883349940.04429733-dfe9-4aac-bee6-505b6bbb4f65.aaacfbc8-bf11-456d-8c70-f0c3f05c4b95" alt="Call of Duty®" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Call of Duty®</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">144,5h</span>
+                        <span class="game-achievements-tag">🏅 25</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 15.0%"></div>
+                            <span class="progress-text">15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">4</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.40391.13915115277924383.ab2daab8-cb71-4e1a-ad73-9e4a3e87c3f3.960a3fa2-5987-49b8-9d15-602af0a1ff93" alt="Hollow Knight: Silksong" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Hollow Knight: Silksong</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">123,3h</span>
+                        <span class="game-achievements-tag">🏅 46</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 76.0%"></div>
+                            <span class="progress-text">76%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">5</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.50952.13768370188591668.4b90d205-ad4f-4a92-bca1-f89b8bbc2c5c.9b0d0717-3628-4a62-a19c-e521dc2dd0ca" alt="Diablo® IV" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Diablo® IV</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">97,8h</span>
+                        <span class="game-achievements-tag">🏅 15</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 21.0%"></div>
+                            <span class="progress-text">21%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">6</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.35214.63407868131364914.05e7cc4d-03d0-4225-b61b-a185d63972ae.1386a3dc-c089-4abb-a831-dbaf26ece1eb" alt="Cyberpunk 2077" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Cyberpunk 2077</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">88,4h</span>
+                        <span class="game-achievements-tag">🏅 44</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 75.0%"></div>
+                            <span class="progress-text">75%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">7</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.40346.13624715126573049.35e3abd5-bd41-4efb-bc2a-0bfbdd50b02a.84157e34-31f1-40b6-849a-e8729c39d4b6" alt="Avowed" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Avowed</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">78,8h</span>
+                        <span class="game-achievements-tag">🏅 35</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 70.0%"></div>
+                            <span class="progress-text">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">8</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.13628.14322280443288156.27788484-2760-47f7-be0d-dd693682e016.04a10e3c-848f-424d-a431-2846f34b1a6b" alt="Clair Obscur: Expedition 33" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Clair Obscur: Expedition 33</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">75,1h</span>
+                        <span class="game-achievements-tag">🏅 42</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 60.0%"></div>
+                            <span class="progress-text">60%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">9</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.8059.14440549613106092.b31249c1-76f7-4d2f-bc17-75d6d2d5bba4.cc887421-ad75-4279-957e-7bfcf0f06664" alt="Black Myth: Wukong" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Black Myth: Wukong</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">67,3h</span>
+                        <span class="game-achievements-tag">🏅 69</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 68.0%"></div>
+                            <span class="progress-text">68%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card ">
+                <div class="game-rank">10</div>
+                <img src="http://store-images.s-microsoft.com/image/apps.19000.14092857068341011.87382aa9-ecf1-4458-9992-3a4a33d440e4.325edc37-3621-45a9-a09e-33ec8b1088b1" alt="Star Wars Outlaws" class="game-image" onerror="this.src='https://via.placeholder.com/100/1a1a2e/FFFFFF?text=?'">
+                <div class="game-info">
+                    <div class="game-name">Star Wars Outlaws</div>
+                    <div class="game-stats-row">
+                        <span class="game-hours">56,5h</span>
+                        <span class="game-achievements-tag">🏅 42</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-bar full-width">
+                            <div class="progress-fill" style="width: 62.0%"></div>
+                            <span class="progress-text">62%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- CONQUISTAS MAIS RARAS -->
+    <section class="section achievements-section">
+        <h2 class="section-title">🏆 TOP 10 CONQUISTAS MAIS RARAS</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin: -30px 0 40px;">
+            Apenas uma pequena porcentagem dos jogadores conquistou estas
+        </p>
+        <div class="achievements-grid">
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">1</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd_A1vPP1bOvwB9LqemyyRtL83w2BHC3prmEjUMxJTZqHxidwwtbS4ApX5Z0ZCnPdqviZfjCs1rw2u7rLklhIZwh880aofK.PTrAccPPQnJOk" alt="Conclusão Rápida" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Conclusão Rápida</div>
+                    <div class="achievement-game">Hollow Knight: Silksong</div>
+                    <div class="achievement-desc">Consiga 100% de conclusão e termine o jogo em menos de 30 horas</div>
+                    <div class="achievement-date">📅 12/10/2025</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.2%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">70G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">2</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsdxeeHpl0Wdu4aq5NoXmngnpLRjSChG7DZsdjbVgMqDcaPbKfSngdO3pAUHV7a30zZWk_eT84V6de6M5vHh0h0XE.2cuCdJaxi4zpXMcSj_e4c1YFcaNw8ICa_xor4kZzKQ--" alt="A vida tem dessas" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">A vida tem dessas</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Morreu de todos os jeitos possíveis enquanto jogava como Colt.</div>
+                    <div class="achievement-date">📅 22/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.2%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">3</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsdz2kcRwwxb.UpekfMq0ERYwsqT5HmAuAgF14W1FZCm0xnx37.3n70.Z.ZSKGUMOCxu3k_RbLckMcm1_DZBN8QIP_hoajh5ISwA83Z.k3wuQgyxA8z0ce9ZIfkIHQ6UcvRQ--" alt="Solução quântica" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Solução quântica</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Matou todas as versões de Wenjie dentro de um período de 90 segundos. Simples.</div>
+                    <div class="achievement-date">📅 17/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.2%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">4</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsdxqcby.HXw6lvEHeySmXWE4oW9ituGMXuNTRz3RMqMIumIdgqRn3H_r8xyvyVBYLxjccM_9qUrwypoGA3lhvzvlIk2uJB.JES0SPA0JSIjZ4yxmFGyfLoSkB3PUU8jQjdQ--" alt="Mãos (quase) limpas" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Mãos (quase) limpas</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Matou todos os Visionários e nenhum Eternalista em um único ciclo.</div>
+                    <div class="achievement-date">📅 19/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.2%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">25G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">5</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd8ZQFK9VzFJhpZJkREbqHB_SO4Rb523cvx6Y_1VBkVlexcauDESudOH4B061ZGzxmZYbA0oSE8iS.DX6zjCNROIN4pu99HH3gtdqdD5.3f8CZklMxxIPB7TIbmmhoUtQjA--" alt="Um jogo de Charlie Montague" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Um jogo de Charlie Montague</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Vença o Desafio Madrugador do Charlie, Pensa em Recompensa, o Audácia, Automa-To</div>
+                    <div class="achievement-date">📅 22/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.2%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">6</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsdyn_NIw8ensYqzGdg3iA5d8mBXqCD5jrfRu.CtQrQQ_.yFFwClN9a7RsFB3DRAEH4ssLr2tBriUDUQb3wFUc6PdVAzTFG5T1ZOQBgxi9IPLXQSk3DeDuRf4iKeRkuaJqIg--" alt="Penetra espectral" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Penetra espectral</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Matou 3 alvos na festa do Aleksis sem ser detectado e então saiu de Updaam.</div>
+                    <div class="achievement-date">📅 18/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.3%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">25G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">7</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd66FLquQ0Mgyhc5l63RJlzMFFenRFcLvNILIEzp6K6MN.fKnpoyvO3j6WHVoF2rMcE9gFvIcGaBDkzRPkfo9qicTnfk7.NwVDv5QeMbcxLsysrGjPo.soWER4CZSQ3rI2g--" alt="Como veio ao mundo" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Como veio ao mundo</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Matou o personagem seminu em cada mapa.</div>
+                    <div class="achievement-date">📅 22/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.3%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">25G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">8</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd4sv0pdXrLNhKBNhqtbmHX3kQZNgUd_pRxKNuuzi56D4Q8KOd.NqK8632qOWSdA3nM7iZyK_vJgsQSvDI4buPSGptB7HfXDHQtzJQeFKdjrITxnwaeGCUvYxkqXaKItBDw--" alt="Num piscar de olhos" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Num piscar de olhos</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Jogando como Colt, transportou um inimigo para uma mina usando Finta.</div>
+                    <div class="achievement-date">📅 17/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.3%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">9</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd4JPtcQ5jbatEHnfd2dGGGLkdasN7wU97Lb7GBQp34exbFjFugicq.VGiy8Cj_vLq0DjvAWpsIjKQzEpI_Q.nHJ3bgDL_H9gUW68v1NMGbn2hDDvJWYSMPL7HG8fcjJhiQ--" alt="Dia do Julgamento" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Dia do Julgamento</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Matou Harriet com gás venenoso.</div>
+                    <div class="achievement-date">📅 21/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.3%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+            <div class="achievement-card legendary">
+                <div class="achievement-rank">10</div>
+                <img src="https://images-eds-ssl.xboxlive.com/image?url=27S1DHqE.cHkmFg4nspsd6shlmTY0ROeDoXYt67h7CvNHs.U_8_h3uv5.zPTtDEgiZcqCXsT6T4bGdVpDeNc2iVuM67Dw1ohKLJtybLxZxyyBzCmSIu3KqEScylWOiprGVvhWdvLYLINkYSMDvX7Bg--" alt="Simples e eficiente" class="achievement-icon" onerror="this.src='https://via.placeholder.com/80/107C10/FFFFFF?text=🏆'">
+                <div class="achievement-info">
+                    <div class="achievement-name">Simples e eficiente</div>
+                    <div class="achievement-game">DEATHLOOP</div>
+                    <div class="achievement-desc">Entrou em um mapa com uma combinação vazia e matou todos os Visionários, depois </div>
+                    <div class="achievement-date">📅 17/12/2023</div>
+                </div>
+                <div class="achievement-rarity">
+                    <div class="rarity-percent">0.3%</div>
+                    <div class="rarity-label">dos jogadores</div>
+                    <div class="achievement-gs">15G</div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- GRÁFICO DE CONQUISTAS -->
+    <div class="chart-section">
+        <h2 class="section-title" style="margin-bottom: 30px;">📈 CONQUISTAS POR MÊS</h2>
+        <div class="chart-container">
+            <canvas id="achievementsChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- JOGOS 100% -->
+    <section class="section">
+        <h2 class="section-title">✅ JOGOS 100% COMPLETADOS (28)</h2>
+        <div class="completed-grid">
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.17658.14341421973666013.292233f8-d8a7-4ef0-bb49-824c7b2154f4.a874ab6c-c593-46da-beec-a0a275edd53a" alt="SILENT HILL 2" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">SILENT HILL 2</div>
+                    <div class="completed-stats">1000G · 16,8h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.31716.64860558234786024.c6d17f3a-2d73-46e6-8a1e-c828e528d51f.15e3df91-43f0-4055-8d0c-fcd4ef265c93" alt="Little Nightmares II Enhanced Edition" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Little Nightmares II Enhanced Edition</div>
+                    <div class="completed-stats">1000G · 6,0h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.1369.14239344665439398.f72b7e9e-0a95-4e76-b1e3-8989c4d70e2e.b3c057a4-8d69-420d-8d02-9c28587dac55" alt="DOOM: The Dark Ages" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">DOOM: The Dark Ages</div>
+                    <div class="completed-stats">1000G · 38,0h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.5858.14634955238674857.649b7ff9-0dfc-4951-9b65-c5d815215da6.90208516-ba3b-47a9-a130-ef94cf860f5b" alt="DEATHLOOP" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">DEATHLOOP</div>
+                    <div class="completed-stats">1000G · 54,2h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.31946.13678609147241298.c742bfe1-6624-4d6a-800e-503c12872c58.bf5a297c-46e9-4f84-ace0-768fc3345071" alt="South of Midnight" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">South of Midnight</div>
+                    <div class="completed-stats">1000G · 23,5h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.17462.13754353355107546.f95d4bed-6029-48c9-95a2-24f3a636c4e7.2e267d7c-65c3-48b3-9f5a-e27a20bf04d4" alt="The Sinking City Xbox Series X|S" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">The Sinking City Xbox Series X|S</div>
+                    <div class="completed-stats">1000G · 15,1h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.36981.14437625873556138.1d6e288f-b89e-475a-994c-e74942708ac7.65ab57f9-0005-4919-8efe-281e446f19ad" alt="Creaks" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Creaks</div>
+                    <div class="completed-stats">1000G · 6,5h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.9535.14467989922179877.4281a03c-f00f-4e46-b74d-f95353494fc6.ae2a3b97-980e-43f6-876d-71e60710ef5a" alt="Blasphemous" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Blasphemous</div>
+                    <div class="completed-stats">1000G · 27,1h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.10157.14335040691238971.69596c0b-00e0-49eb-a6ce-2535ef602b5e.c4d68cfb-c7f0-4e34-97ec-a9b9bf823225" alt="Alan Wake 2" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Alan Wake 2</div>
+                    <div class="completed-stats">1360G · 44,9h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.39322.13702044937897358.8701ab78-da18-4c36-8c1e-3d4e6dfd60c9.a0be6178-25eb-43e3-9a52-170445da58fc" alt="TUNIC" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">TUNIC</div>
+                    <div class="completed-stats">1000G · 3,0h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.60562.13537574391772742.e387dd56-e35c-40fb-bc0c-c0c1decef3a1.1de59474-dc66-4ad3-8050-ee622224a589" alt="A Plague Tale: Requiem" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">A Plague Tale: Requiem</div>
+                    <div class="completed-stats">1000G · 26,6h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.61900.68306748966338141.e6f96fac-aa67-4f59-9043-10654607aa79.7472e56d-b2da-462f-8312-d12050d56ec6" alt="A Plague Tale: Innocence" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">A Plague Tale: Innocence</div>
+                    <div class="completed-stats">1000G · 10,7h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.12424.14140193526420322.c7c76f67-903a-4c68-9ad6-57f9578bd894.4f8c76d7-f8c5-4331-bf21-42d57fa92469" alt="Rabio" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Rabio</div>
+                    <div class="completed-stats">5000G · 0,6h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.52784.13890935774368355.d64a16de-047b-47a6-984a-c3de136aba7d.17e717ad-d1a6-490e-a091-c51989db0fbd" alt="Null Drifter" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Null Drifter</div>
+                    <div class="completed-stats">4000G · 1,5h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.62419.14188092651145353.c3919981-fb28-4755-b504-a3b021220351.0a309985-7d9f-40e8-a002-7ece3c5968ae" alt="STAR WARS Jedi: Survivor™" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">STAR WARS Jedi: Survivor™</div>
+                    <div class="completed-stats">1000G · 55,3h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.23266.13792825953770393.d724f3b1-bed5-49fc-bf91-6573fe71ba5f.264fb874-a794-4e8e-8dc4-57409e799169" alt="Many Faces: Console Edition" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Many Faces: Console Edition</div>
+                    <div class="completed-stats">4000G · 0,7h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.4880.71880157815410720.768ba6e5-793f-45af-8f98-a14bc261e1c1.5634c02b-d53f-43e1-b132-de624b29bac2" alt="RESIDENT EVIL 3 for Windows" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">RESIDENT EVIL 3 for Windows</div>
+                    <div class="completed-stats">1000G · 28,9h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.23447.14377662572858195.0cf67274-c7f3-43bc-8b24-87daf93a0fac.1f99b4c4-e10c-4291-ba47-d6e04910f759" alt="Open Roads" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Open Roads</div>
+                    <div class="completed-stats">1000G · 0,7h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.2904.13901545943501690.6f65c9ca-e6b9-46e0-bfef-3d4b7f211abf.19b8f144-e64c-4830-bcec-cd4b3a2bc697" alt="Somerville" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">Somerville</div>
+                    <div class="completed-stats">1000G · 4,8h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+            <div class="completed-item">
+                <img src="http://store-images.s-microsoft.com/image/apps.52300.65392999590663672.028b6875-f925-4d40-b3a1-e44db3b4fa32.7bcb3d0f-46fc-43ea-84d1-031bd0817da2" alt="STAR WARS Jedi: Fallen Order™" onerror="this.src='https://via.placeholder.com/60/107C10/FFFFFF?text=✓'">
+                <div class="completed-info">
+                    <div class="completed-name">STAR WARS Jedi: Fallen Order™</div>
+                    <div class="completed-stats">1000G · 43,5h</div>
+                </div>
+                <div class="completed-badge">100%</div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>24/12/2025 às 09:34 · walderpinheiro</p>
+    </footer>
+    
+    <script>
+        // Gráfico de conquistas por mês
+        const ctx = document.getElementById('achievementsChart').getContext('2d');
+        
+        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        gradient.addColorStop(0, 'rgba(46, 204, 64, 0.5)');
+        gradient.addColorStop(1, 'rgba(46, 204, 64, 0)');
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Apr/16", "Nov/21", "Nov/22", "Apr/23", "May/23", "Jun/23", "Jul/23", "Aug/23", "Sep/23", "Oct/23", "Nov/23", "Dec/23", "Jan/24", "Feb/24", "Mar/24", "Apr/24", "May/24", "Jun/24", "Jul/24", "Aug/24", "Sep/24", "Oct/24", "Nov/24", "Dec/24", "Jan/25", "Feb/25", "Mar/25", "Apr/25", "May/25", "Jun/25", "Jul/25", "Aug/25", "Sep/25", "Oct/25", "Nov/25", "Dec/25"],
+                datasets: [{
+                    label: 'Conquistas',
+                    data: [1, 2, 2, 4, 4, 11, 10, 45, 43, 51, 184, 171, 126, 107, 167, 73, 170, 190, 225, 160, 81, 62, 60, 91, 65, 84, 111, 80, 56, 77, 93, 147, 48, 66, 67, 58],
+                    borderColor: '#2ECC40',
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#2ECC40',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(20, 20, 32, 0.95)',
+                        titleColor: '#fff',
+                        bodyColor: '#2ECC40',
+                        borderColor: '#2ECC40',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' conquistas';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            color: '#8a8a9a'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            color: '#8a8a9a'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Share Review
+        async function shareReview() {
+            const title = 'Xbox Lifetime Review - walderpinheiro';
+            const text = 'walderpinheiro - 3.486,9h jogadas, 157 jogos, 3.354 conquistas';
+            const url = window.location.href;
+            
+            // Web Share API (mobile/supported browsers)
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title, text, url });
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        shareOnTwitter(text, url);
+                    }
+                }
+            } else {
+                shareOnTwitter(text, url);
+            }
+        }
+        
+        function shareOnTwitter(text, url) {
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank', 'width=550,height=420');
+        }
+    </script>
+</body>
+</html>

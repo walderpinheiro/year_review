@@ -1,28 +1,89 @@
-# Xbox Year in Review 2025
+# Xbox Lifetime Review
 
-📊 Minha retrospectiva de gaming de 2025 gerada automaticamente via Xbox WebAPI.
+Gerador de retrospectiva Xbox via API.
 
-## 🎮 Estatísticas
+## Estrutura
 
-- **Jogos jogados:** 44
-- **Horas jogadas:** 1.546h
-- **Achievements:** 1.255
-- **Gamerscore conquistado:** 25.780G
-- **Jogos 100%:** 6
+```
+year_review/
+├── src/
+│   ├── config.py          # Configurações
+│   ├── utils.py           # Utilitários
+│   ├── api.py             # Cliente Xbox API
+│   ├── auth.py            # Autenticação
+│   ├── snapshot.py        # Gerador de snapshot
+│   ├── html_generator.py  # Gerador HTML
+│   └── svg_generator.py   # Gerador SVG para compartilhamento
+├── tests/
+│   ├── test_utils.py
+│   ├── test_api.py
+│   ├── test_html_generator.py
+│   ├── test_snapshot.py
+│   └── test_svg_generator.py
+├── authenticate.py        # Entry point: autenticação
+├── get_snapshot.py        # Entry point: gerar snapshot
+├── generate_html.py       # Entry point: gerar HTML
+└── docker-compose.yml
+```
 
-## 🏆 Top 5 Jogos
+## Uso
 
-1. Hollow Knight: Silksong - 123.0h
-2. Avowed - 78.8h
-3. Clair Obscur: Expedition 33 - 75.1h
-4. Black Myth: Wukong - 67.3h
-5. Assassin's Creed Shadows - 54.5h
+### Autenticar
 
-## 🔗 Links
+```bash
+docker-compose run --rm -p 8080:8080 xbox python authenticate.py
+```
 
-- [Ver página](https://walderpinheiro.github.io/year_review/)
+### Gerar Snapshot
 
----
+```bash
+docker-compose run --rm xbox python get_snapshot.py
+docker-compose run --rm xbox python get_snapshot.py "Gamertag"
+```
 
-*Gerado via [xbox-webapi](https://github.com/OpenXbox/xbox-webapi-python)*
+### Gerar HTML e SVG
 
+```bash
+docker-compose run --rm xbox python generate_html.py achievements_snapshot_Gamertag_latest.json
+```
+
+Gera dois arquivos:
+- `lifetime_review_Gamertag.html` - Página HTML completa
+- `share_Gamertag.svg` - Imagem 1200x600 para compartilhamento
+
+## Outputs
+
+| Arquivo | Descrição |
+|---------|-----------|
+| `achievements_snapshot_*.json` | Dados brutos da conta |
+| `lifetime_review_*.html` | Página HTML com estatísticas |
+| `share_*.svg` | Imagem para redes sociais |
+
+## SEO e Compartilhamento
+
+O HTML gerado inclui:
+- Meta tags Open Graph (Facebook)
+- Meta tags Twitter Card
+- Botão de compartilhar (Web Share API + fallback Twitter)
+- Referência ao SVG nas meta tags de imagem
+
+## Testes
+
+```bash
+docker-compose run --rm test
+```
+
+## Configuração
+
+Variáveis de ambiente:
+- `XBOX_CLIENT_ID` - Client ID do Azure AD
+- `XBOX_CLIENT_SECRET` - Client Secret do Azure AD
+
+## APIs
+
+| Endpoint | Uso |
+|----------|-----|
+| profile.xboxlive.com | Perfil |
+| titlehub.xboxlive.com | Jogos |
+| userstats.xboxlive.com | Horas |
+| achievements.xboxlive.com | Conquistas + raridade |

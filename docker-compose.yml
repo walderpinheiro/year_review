@@ -1,0 +1,18 @@
+services:
+  xbox:
+    build: .
+    volumes:
+      - ./output:/app/output
+      - ./tokens:/app/tokens
+    environment:
+      - XBOX_CLIENT_ID=${XBOX_CLIENT_ID}
+      - XBOX_CLIENT_SECRET=${XBOX_CLIENT_SECRET}
+    ports:
+      - "8080:8080"
+
+  test:
+    build: .
+    command: pytest -v
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
